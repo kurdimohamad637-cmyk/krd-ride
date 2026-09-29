@@ -1,0 +1,9 @@
+{
+  "name": "KRD Ride",
+  "short_name": "KRD Ride",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#1756D8",
+  "description": "KRD Ride iPhone design preview"
+}

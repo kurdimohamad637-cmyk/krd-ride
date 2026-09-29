@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#1756D8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="KRD Ride">
+<link rel="manifest" href="manifest.webmanifest">
+<title>KRD Ride</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f7fb;color:#111827}
+.app{max-width:430px;min-height:100vh;margin:auto;background:#f7f9fc;position:relative;padding-bottom:78px}
+.top{background:#1756D8;color:white;padding:calc(16px + env(safe-area-inset-top)) 20px 20px;border-radius:0 0 28px 28px}
+.brand{font-weight:900;font-size:27px;letter-spacing:.4px}.sub{opacity:.85;font-size:13px;margin-top:4px}
+.card{background:white;margin:14px 16px;padding:16px;border-radius:20px;box-shadow:0 7px 25px #183b7020}
+.map{height:330px;margin:14px 16px;border-radius:24px;position:relative;overflow:hidden;background:
+linear-gradient(35deg,transparent 48%,#d9e2ec 49% 52%,transparent 53%),
+linear-gradient(125deg,transparent 48%,#d9e2ec 49% 52%,transparent 53%),#edf3ea;background-size:110px 110px}
+.road{position:absolute;background:white;box-shadow:0 0 0 1px #d9e2ec}.r1{height:20px;width:130%;left:-15%;top:42%;transform:rotate(-18deg)}.r2{width:18px;height:130%;left:55%;top:-15%;transform:rotate(20deg)}
+.pin{position:absolute;width:42px;height:42px;border-radius:50%;background:#1756D8;color:white;display:grid;place-items:center;font-size:21px;box-shadow:0 5px 14px #0003;border:3px solid white}
+.p1{left:18%;top:22%}.p2{right:16%;top:30%}.p3{left:48%;bottom:17%}
+.me{position:absolute;left:44%;top:46%;width:18px;height:18px;border-radius:50%;background:#2e90fa;border:4px solid white;box-shadow:0 0 0 2px #2e90fa55}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.price{font-size:22px;font-weight:900}.muted{color:#667085;font-size:13px}
+.btn{width:100%;border:0;border-radius:15px;padding:15px;background:#1756D8;color:white;font-weight:800;font-size:16px}.btn2{background:#eaf0ff;color:#1756D8}
+.nav{position:fixed;max-width:430px;width:100%;bottom:0;background:white;border-top:1px solid #e5e7eb;display:flex;justify-content:space-around;padding:9px 3px calc(8px + env(safe-area-inset-bottom));z-index:20}
+.nav button{border:0;background:none;color:#667085;font-size:11px}.nav .active{color:#1756D8;font-weight:800}.ico{font-size:21px;display:block;margin-bottom:2px}
+.screen{display:none}.screen.active{display:block}.pill{background:#ecfdf3;color:#027a48;padding:6px 10px;border-radius:99px;font-size:12px;font-weight:800}
+.item{padding:14px 0;border-bottom:1px solid #eef2f6}.item:last-child{border:0}
+.bigbalance{font-size:34px;font-weight:900;margin:8px 0}.ridebox{text-align:center;padding:22px}.timer{font-size:44px;font-weight:900}.cost{font-size:28px;font-weight:900;color:#1756D8}
+.login{min-height:100vh;padding:calc(55px + env(safe-area-inset-top)) 22px 30px;background:linear-gradient(180deg,#1756D8 0 34%,#f7f9fc 34%)}
+.logo{color:white;text-align:center;margin-bottom:45px}.logo b{font-size:36px}.form{background:white;border-radius:26px;padding:24px;box-shadow:0 15px 40px #102a562e}
+input{width:100%;padding:14px;border:1px solid #d0d5dd;border-radius:13px;margin:7px 0 13px;font-size:16px}
+label{font-size:13px;font-weight:700}.demo{font-size:12px;color:#667085;text-align:center;margin-top:12px}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#fff4e5;color:#b54708;font-size:12px;font-weight:800}
+</style>
+</head>
+<body>
+<div id="login" class="login">
+  <div class="logo"><b>KRD RIDE</b><div>Move Erbil your way</div></div>
+  <div class="form">
+    <h2 style="margin-top:0">Welcome back</h2>
+    <p class="muted">Sign in to find a scooter and start riding.</p>
+    <label>Phone number</label><input value="+964 750 000 0000">
+    <label>Password</label><input type="password" value="12345678">
+    <button class="btn" onclick="enterApp()">SIGN IN</button>
+    <button class="btn btn2" style="margin-top:10px" onclick="alert('Create Account preview')">CREATE ACCOUNT</button>
+    <div class="demo">Design preview • no real payment or scooter control</div>
+  </div>
+</div>
+
+<div id="app" class="app" style="display:none">
+<section id="home" class="screen active">
+ <div class="top"><div class="brand">KRD RIDE</div><div class="sub">Find a scooter near you</div></div>
+ <div class="map"><div class="road r1"></div><div class="road r2"></div><div class="pin p1">🛴</div><div class="pin p2">🛴</div><div class="pin p3">🛴</div><div class="me"></div></div>
+ <div class="card"><div class="row"><div><b>KRD-001</b><div class="muted">92% battery • Available</div></div><span class="pill">READY</span></div>
+ <hr style="border:0;border-top:1px solid #eee;margin:14px 0"><div class="row"><div><div class="muted">Price</div><div class="price">25,000 IQD</div><div class="muted">per 60 minutes</div></div><button class="btn" style="width:135px" onclick="show('ride')">SCAN TO RIDE</button></div></div>
+</section>
+
+<section id="wallet" class="screen">
+ <div class="top"><div class="brand">Wallet</div><div class="sub">KRD Ride balance</div></div>
+ <div class="card"><div class="muted">Available balance</div><div class="bigbalance">35,000 IQD</div><button class="btn">+ ADD MONEY</button></div>
+ <div class="card"><b>Recent transactions</b><div class="item row"><span>Ride • KRD-002</span><b>- 6,250</b></div><div class="item row"><span>Wallet top-up</span><b>+ 25,000</b></div><div class="item row"><span>Ride • KRD-001</span><b>- 12,500</b></div></div>
+</section>
+
+<section id="history" class="screen">
+ <div class="top"><div class="brand">Ride History</div><div class="sub">Your recent KRD trips</div></div>
+ <div class="card"><div class="item"><div class="row"><b>KRD-002</b><b>6,250 IQD</b></div><div class="muted">15 min • Completed</div></div>
+ <div class="item"><div class="row"><b>KRD-001</b><b>12,500 IQD</b></div><div class="muted">30 min • Completed</div></div></div>
+</section>
+
+<section id="profile" class="screen">
+ <div class="top"><div class="brand">Profile</div><div class="sub">Account & verification</div></div>
+ <div class="card"><h2 style="margin:0 0 5px">KRD Rider</h2><div class="muted">+964 750 000 0000</div><p><span class="badge">VERIFICATION PENDING</span></p>
+ <div class="item">👤 Personal information</div><div class="item">🪪 Passport verification</div><div class="item">📷 Face verification</div><div class="item">🔔 Notifications</div><div class="item">⚙️ Settings</div></div>
+</section>
+
+<section id="ride" class="screen">
+ <div class="top"><div class="brand">Active Ride</div><div class="sub">KRD-001 • 92% battery</div></div>
+ <div class="card ridebox"><div class="muted">RIDE TIME</div><div class="timer" id="timer">00:00</div><div class="muted">CURRENT COST</div><div class="cost" id="cost">0 IQD</div><p class="muted">25,000 IQD / 60 min</p><button class="btn" onclick="endRide()">END RIDE</button></div>
+ <div class="card row"><div><b>Speed</b><div class="muted">Demo telemetry</div></div><div class="price">0 km/h</div></div>
+</section>
+
+<nav class="nav">
+<button class="active" onclick="show('home',this)"><span class="ico">🗺️</span>Map</button>
+<button onclick="show('wallet',this)"><span class="ico">💳</span>Wallet</button>
+<button onclick="show('history',this)"><span class="ico">🧾</span>History</button>
+<button onclick="show('profile',this)"><span class="ico">👤</span>Profile</button>
+</nav>
+</div>
+<script>
+let sec=0,tick=null;
+function enterApp(){document.getElementById('login').style.display='none';document.getElementById('app').style.display='block'}
+function show(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');if(btn){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}if(id==='ride'&&!tick){tick=setInterval(()=>{sec++;let m=Math.floor(sec/60),s=sec%60;document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');document.getElementById('cost').textContent=Math.round(sec*25000/3600).toLocaleString()+' IQD'},1000)}}
+function endRide(){if(tick){clearInterval(tick);tick=null}alert('Demo ride ended');show('home')}
+</script>
+</body>
+</html>
